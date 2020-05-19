@@ -1,0 +1,10 @@
+note over browser:
+browser js function form.onsubmit updates local notes list
+and also sends to the server the new note
+end note
+browser->server: HTTP POST https://fullstack-exampleapp.herokuapp.com/new_note_spa
+server->browser: json with note created message
+note over browser:
+browser js function form.onsubmit continues and reloads the notes list
+which now has the new note
+end note
