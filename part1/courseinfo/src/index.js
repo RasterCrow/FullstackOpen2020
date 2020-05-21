@@ -1,3 +1,5 @@
+//Ore passate in part1 = 2
+
 import React from 'react'
 import ReactDOM from 'react-dom'
 
