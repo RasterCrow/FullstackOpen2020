@@ -14,26 +14,34 @@ const Statistics = ({goodNumber,badNumber,neutralNumber}) => {
   let votesSum = badNumber + goodNumber + neutralNumber
   let average = (goodNumber-badNumber)/votesSum
   let positivePerc = goodNumber/votesSum*100
-  //if values are nan display as 0
+
+  if(votesSum == 0 ) {
+    return(
+      <div>No feedback given</div>
+    )
+  }else{
+  /*if values are nan display as 0, not needed anymore
   if (isNaN(average)) average =0
   if (isNaN(positivePerc)) positivePerc =0
-  return (
-    <div>
-      <p>
-        good {goodNumber}
-        <br/> 
-        neutral {neutralNumber} 
-        <br/> 
-        bad {badNumber}
-        <br/> 
-        all {votesSum}
-        <br/> 
-        average {average}
-        <br/> 
-        positive {positivePerc} %
-      </p>
-    </div>
-  )
+  */
+    return (
+      <div>
+        <p>
+          good {goodNumber}
+          <br/> 
+          neutral {neutralNumber} 
+          <br/> 
+          bad {badNumber}
+          <br/> 
+          all {votesSum}
+          <br/> 
+          average {average}
+          <br/> 
+          positive {positivePerc} %
+        </p>
+      </div>
+    )
+  }
 }
 const App = () => {
   // save clicks of each button to own state
