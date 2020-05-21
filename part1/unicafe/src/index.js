@@ -9,9 +9,10 @@ const Button = ({text, handleClick}) =>(
 
   const Statistic = ({text,value}) =>{
     return (
-      <div>
-        {text} {value}
-      </div>
+      <tr>
+        <td>{text}</td>
+        <td> {value}</td>
+      </tr>
     )
   }
 //Statistics component
@@ -21,7 +22,7 @@ const Statistics = ({goodNumber,badNumber,neutralNumber}) => {
   let average = (goodNumber-badNumber)/votesSum
   let positivePerc = goodNumber/votesSum*100
 
-  if(votesSum == 0 ) {
+  if(votesSum === 0 ) {
     return(
       <div>No feedback given</div>
     )
@@ -32,12 +33,16 @@ const Statistics = ({goodNumber,badNumber,neutralNumber}) => {
   */
     return (
       <div>
-          <Statistic text='good' value={goodNumber}/>
-          <Statistic text='neutral' value={neutralNumber}/>
-          <Statistic text='bad' value={badNumber}/>
-          <Statistic text='all' value={votesSum}/>
-          <Statistic text='average' value={average}/>
-          <Statistic text='positive' value = {positivePerc+' %'} />
+        <table>
+          <tbody>
+            <Statistic text='good' value={goodNumber}/>
+            <Statistic text='neutral' value={neutralNumber}/>
+            <Statistic text='bad' value={badNumber}/>
+            <Statistic text='all' value={votesSum}/>
+            <Statistic text='average' value={average}/>
+            <Statistic text='positive' value = {positivePerc+' %'} />
+          </tbody>
+        </table>
       </div>
     )
   }
