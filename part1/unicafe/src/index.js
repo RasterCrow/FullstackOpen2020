@@ -4,10 +4,16 @@ import ReactDOM from 'react-dom'
 const Title = ({text}) => <h1>{text}</h1>
 
 const Button = ({text, handleClick}) =>(
-    <button onClick={handleClick}>{text}</button>
-    
+    <button onClick={handleClick}>{text}</button>  
   )
 
+  const Statistic = ({text,value}) =>{
+    return (
+      <div>
+        {text} {value}
+      </div>
+    )
+  }
 //Statistics component
 const Statistics = ({goodNumber,badNumber,neutralNumber}) => {
   //do all the map before displaying
@@ -26,19 +32,12 @@ const Statistics = ({goodNumber,badNumber,neutralNumber}) => {
   */
     return (
       <div>
-        <p>
-          good {goodNumber}
-          <br/> 
-          neutral {neutralNumber} 
-          <br/> 
-          bad {badNumber}
-          <br/> 
-          all {votesSum}
-          <br/> 
-          average {average}
-          <br/> 
-          positive {positivePerc} %
-        </p>
+          <Statistic text='good' value={goodNumber}/>
+          <Statistic text='neutral' value={neutralNumber}/>
+          <Statistic text='bad' value={badNumber}/>
+          <Statistic text='all' value={votesSum}/>
+          <Statistic text='average' value={average}/>
+          <Statistic text='positive' value = {positivePerc+' %'} />
       </div>
     )
   }
