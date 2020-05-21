@@ -8,15 +8,28 @@ const Button = ({text, handleClick}) =>(
     
   )
 
-const FeedbackList = (props) => {
+const Statistics = ({goodNumber,badNumber,neutralNumber}) => {
+  //do all the map before displaying
+  let votesSum = badNumber + goodNumber + neutralNumber
+  let average = (goodNumber-badNumber)/votesSum
+  let positivePerc = goodNumber/votesSum*100
+  //if values are nan display as 0
+  if (isNaN(average)) average =0
+  if (isNaN(positivePerc)) positivePerc =0
   return (
     <div>
       <p>
-        good {props.goodNumber}
+        good {goodNumber}
         <br/> 
-        neutral {props.neutralNumber} 
+        neutral {neutralNumber} 
         <br/> 
-        bad{props.badNumber}
+        bad {badNumber}
+        <br/> 
+        all {votesSum}
+        <br/> 
+        average {average}
+        <br/> 
+        positive {positivePerc} %
       </p>
     </div>
   )
@@ -44,7 +57,7 @@ const App = () => {
       <Button text='Neutral' handleClick={handleNeutralButton}/>
       <Button text='Bad' handleClick={handleBadButton}/>
       <Title text='Statistics'/>
-      <FeedbackList goodNumber={good} neutralNumber={neutral} badNumber={bad}/>
+      <Statistics goodNumber={good} neutralNumber={neutral} badNumber={bad}/>
     </div>
   )
 }
