@@ -8,6 +8,7 @@ const Button = ({text, handleClick}) =>(
     
   )
 
+//Statistics component
 const Statistics = ({goodNumber,badNumber,neutralNumber}) => {
   //do all the map before displaying
   let votesSum = badNumber + goodNumber + neutralNumber
