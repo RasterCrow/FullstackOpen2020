@@ -10,9 +10,17 @@ const Header = ({ course }) => {
 //for each part in the course array, sum the nunmber of exercises
 //now here I could also user forEAch, since I don't need to save the results in an array.
 const Total = ({ course }) => {
-  let sum =0;
+  const sum = course.parts.reduce((accumulator,currentValue)=>{
+      console.log('accumulator : ',accumulator ,' parts : ',currentValue)
+      return accumulator+=currentValue.exercises
+
+  },0)
+  
+  /*
+  const sum =0;
   course.parts.map(part => sum+=part.exercises)
   //course.parts.forEach(part => sum+=part.exercises)
+  */
   return(
     <p>Number of exercises {sum}</p>
   ) 
