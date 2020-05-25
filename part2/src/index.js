@@ -7,8 +7,12 @@ const Header = ({ course }) => {
   )
 }
 
+//for each part in the course array, sum the nunmber of exercises
+//now here I could also user forEAch, since I don't need to save the results in an array.
 const Total = ({ course }) => {
-  const sum = course.parts[0].exercises + course.parts[1].exercises + course.parts[2].exercises
+  let sum =0;
+  course.parts.map(part => sum+=part.exercises)
+  //course.parts.forEach(part => sum+=part.exercises)
   return(
     <p>Number of exercises {sum}</p>
   ) 
@@ -22,6 +26,7 @@ const Part = ({part}) => {
   )
 }
 
+//
 const Content = ({ course }) => {
   return (
     <div>
@@ -35,6 +40,7 @@ const Course =({course}) => {
     <div>
       <Header course={course} />
       <Content course={course} />
+      <Total course={course} />
     </div>
   )
 }
