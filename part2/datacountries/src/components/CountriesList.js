@@ -1,22 +1,32 @@
 import React from 'react'
 import InfoPanel from './InfoPanel'
-import Country from './Country'
 
-const CountriesList = ({countries,showInfo}) =>{
-    if(countries.length > 10){
+const CountriesList = ({countries,showInfo,filter}) =>{
+    let countriesToLoad =0
+    if(filter !== ''){
+      countriesToLoad = countries.filter((element) =>
+          element.name.toUpperCase().includes(filter.toUpperCase())
+        )
+    }else{
+      countriesToLoad = countries
+    }
+    if(countriesToLoad.length > 10){
       return(
         <div>Too many countries, filter them</div>
         )
-    }else if(countries.length === 1){
+    }else if(countriesToLoad.length === 1){
+      
       return(
-        <InfoPanel country={countries[0]}/>
+        <InfoPanel country={countriesToLoad[0]}/>
       )
     }else{
       return(
         <div>
-          {countries.map(country =>
+          {countriesToLoad.map(country =>
           <div key={country.name}>
-            <Country  country={country}/>
+            <div>
+            {country.name}
+            </div>
             <button value={country.name} onClick={showInfo}>Show</button>
           </div>
             )

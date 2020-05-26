@@ -4,33 +4,24 @@ import CountriesList from './components/CountriesList'
 import axios from 'axios'
 
 
+
+
 const App = () => {
   const [countries,setCountries] = useState([])
 
-  const [countryFilter,setFilter] = useState({
-    active: false, filter:''
-  })
+  const [countryFilter,setFilter] = useState('')
 
-  console.log('Filter Active :',countryFilter.active)
-  const countriesToLoad =  countryFilter.active
-    ? countries.filter((element) => {
-        return element.name.toLowerCase().includes(countryFilter.filter.toLowerCase())
-      })
-    : countries
 
   const handleFilterChange = (event) => {
     console.log(event.target.value)
-    setFilter({
-      active : true, filter : event.target.value
-    })
+    setFilter(event.target.value)
   }
 
-  const showInfo = (event) => {
+  const showInfo = event => {
     console.log(event.target.value)
-    setFilter({
-      active : true, filter : event.target.value
-    })
+    setFilter(event.target.value)
   }
+
   useEffect(() => {
     axios
     .get('https://restcountries.eu/rest/v2/all')
@@ -40,12 +31,19 @@ const App = () => {
 
   },[])
 
+  
+  /*
+  
+  */
+    
+    
   return (
     <div className="App">
       <div>
-        find countries <input onChange={handleFilterChange}/>
+        find countries <input value={countryFilter} onChange={handleFilterChange}/>
       </div>
-      <CountriesList countries={countriesToLoad} showInfo={showInfo}/>
+      <CountriesList filter={countryFilter} countries={countries} showInfo={showInfo}/>
+      <div></div>
     </div>
   );
 }
