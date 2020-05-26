@@ -1,11 +1,8 @@
 import React, { useState } from 'react'
+import PersonAdd from './components/PersonAdd'
+import PersonsList from './components/PersonsList'
+import PersonsFilter from './components/PersonsFilter'
 
-
-const Persons = ({persons}) => {
-  return (
-    persons.map(n => <li key={n.name}>{n.name} {n.phone}</li>)
-  )
-}
 
 const App = () => {
   const [ persons, setPersons ] = useState([
@@ -13,64 +10,31 @@ const App = () => {
     { name: 'Ada Lovelace', phone: '39-44-5323523' },
     { name: 'Dan Abramov', phone: '12-43-234345' },
     { name: 'Mary Poppendieck', phone: '39-23-6423122' }
-  ]) 
-  const [ newName, setNewName ] = useState('')
-  const [ newPhone, setNewPhone ] = useState('')
+  ])
+
+  //In the filter component i just update the personFilter values, but the actual filtering (change data to load)
+  //its done here inside the App.js, since  I need to to use the data after filtering in other components. I couldnt update more components at once.
+
   const [ personFilter, setPersonFilter ] = useState({
     active: false, filter:''
   })
 
-  const addPerson = (event)=>{
-    event.preventDefault()
-    
-    if (persons.filter(p => p.name === newName).length > 0) {
-      alert(newName + ' is already in the phonebook')
-    }else{
-      const newPerson = {
-        name: newName,
-        phone: newPhone
-      }
-      setPersons(persons.concat(newPerson))
-      setNewName('')
-    }
-  }
- 
   console.log('Filter Active :',personFilter.active)
   const personsToLoad = personFilter.active
     ? persons.filter((element) => {
         return element.name.toLowerCase().includes(personFilter.filter.toLowerCase())
       })
     : persons
-    
-  const handleNameChange = (event) => {
-    console.log(event.target.value)
-    setNewName(event.target.value)
-  }
-  const handlePhoneChange = (event) => {
-    console.log(event.target.value)
-    setNewPhone(event.target.value)
-  }
-  const handleFilterChange = (event) => {
-    console.log(event.target.value)
-    setPersonFilter({
-      active : true, filter : event.target.value
-    })
-  }
 
+  //page
   return (
     <div>
       <h2>Phonebook</h2>
-      <div>filter person with: <input onChange={handleFilterChange} /></div>
+      <PersonsFilter persons={persons} setPersonFilter={setPersonFilter}/>
       <h2>Add Person</h2>
-      <form onSubmit={addPerson}>
-        <div>name: <input value={newName} onChange={handleNameChange}  /></div>
-        <div>number: <input value={newPhone} onChange={handlePhoneChange} /></div>
-        <div>
-          <button type="submit" >add</button>
-        </div>
-      </form>
-      <h2>Numbers</h2>
-      <Persons persons={personsToLoad}/>
+      <PersonAdd persons={persons} setPersons={setPersons} />
+      <h2>Persons</h2>
+      <PersonsList persons={personsToLoad}/>
     </div>
   )
 }
