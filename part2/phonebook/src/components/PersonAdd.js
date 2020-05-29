@@ -1,7 +1,7 @@
 import React, {useState} from 'react'
 import PersonService from '../services/persons'
 
-const PersonAdd = ({persons, setPersons}) => {
+const PersonAdd = ({persons, setPersons,setAlertMessage}) => {
     const [ newName, setNewName ] = useState('')
     const [ newPhone, setNewPhone ] = useState('')
   
@@ -26,6 +26,10 @@ const PersonAdd = ({persons, setPersons}) => {
               console.log('updated user')
               console.log(updatedPerson)
               setPersons(persons.map(p => p.id !== person.id ? p : updatedPerson))
+              setAlertMessage(`User ${updatedPerson.name} has been updated`)
+              setTimeout(() => {
+                setAlertMessage(null)
+              }, 3000)
             })
             .catch(error => {
               console.log(`Errore ${error}`)
@@ -40,9 +44,13 @@ const PersonAdd = ({persons, setPersons}) => {
           PersonService.addPerson(newPerson)
           .then(returnedPerson =>{
             setPersons(persons.concat(returnedPerson))
+            setAlertMessage(`User ${returnedPerson.name} has been added`)
+            setTimeout(() => {
+              setAlertMessage(null)
+            }, 3000)
+            setNewName('')
+            setNewPhone('')
           })
-          setNewName('')
-          setNewPhone('')
         }         
       }
     }
