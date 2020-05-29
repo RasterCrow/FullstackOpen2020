@@ -13,7 +13,6 @@ const App = () => {
       PersonService
         .getPersonsList()
         .then(list =>{
-          console.log(list)
           console.log('Loaded persons List');
           setPersons(persons.concat(list))
   
@@ -29,7 +28,7 @@ const App = () => {
     active: false, filter:''
   })
 
-  console.log('Filter Active :',personFilter.active)
+  //console.log('Filter Active :',personFilter.active)
   const personsToLoad = personFilter.active
     ? persons.filter((element) => {
         return element.name.toLowerCase().includes(personFilter.filter.toLowerCase())
@@ -44,7 +43,7 @@ const App = () => {
       <h2>Add Person</h2>
       <PersonAdd persons={persons} setPersons={setPersons} />
       <h2>Persons</h2>
-      <PersonsList persons={personsToLoad}/>
+      <PersonsList persons={personsToLoad} setPersons={setPersons}/>
     </div>
   )
 }
