@@ -1,4 +1,5 @@
 import React, {useState} from 'react'
+import axios from 'axios'
 
 const PersonAdd = ({persons, setPersons}) => {
     const [ newName, setNewName ] = useState('')
@@ -6,16 +7,31 @@ const PersonAdd = ({persons, setPersons}) => {
   
     const addPerson = (event)=>{
       event.preventDefault()
-      
-      if (persons.filter(p => p.name === newName).length > 0) {
-        alert(newName + ' is already in the phonebook')
+      if (newName.length === 0 && newPhone.length===0) {
+        alert('You must add a name and a phone number')
+      }else if (newName.length === 0) { 
+        alert('You must add a name')
+      }else if (newPhone.length === 0){
+        alert('You must add a phone number')
       }else{
-        const newPerson = {
-          name: newName,
-          phone: newPhone
-        }
-        setPersons(persons.concat(newPerson))
-        setNewName('')
+        if (persons.filter(p => p.name === newName).length > 0) {
+          alert(newName + ' is already in the phonebook')
+        }else{
+          const newPerson = {
+            name: newName,
+            phone: newPhone
+          }
+          //add person to db
+          axios
+          .post('http://localhost:3001/persons', newPerson)
+          .then(response =>{
+            console.log('added person');
+            //updates list of persons with newest person
+            setPersons(persons.concat(response.data))
+          })
+          setNewName('')
+          setNewPhone('')
+        }         
       }
     }
     const handleNameChange = (event) => {
