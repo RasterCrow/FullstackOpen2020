@@ -15,7 +15,22 @@ const PersonAdd = ({persons, setPersons}) => {
         alert('You must add a phone number')
       }else{
         if (persons.filter(p => p.name === newName).length > 0) {
-          alert(newName + ' is already in the phonebook')
+          if( window.confirm(`${newName} is already in the phonebook, do you want to replace its phone number?`)){
+            //get person id
+            const person = persons.find((person)=> person.name===newName)
+            const personWithNewPhone = {...person, phone:newPhone}
+
+            PersonService
+            .updatePersonNumber(personWithNewPhone.id,personWithNewPhone)
+            .then(updatedPerson => {
+              console.log('updated user')
+              console.log(updatedPerson)
+              setPersons(persons.map(p => p.id !== person.id ? p : updatedPerson))
+            })
+            .catch(error => {
+              console.log(`Errore ${error}`)
+            })
+          }
         }else{
           const newPerson = {
             name: newName,
