@@ -11,13 +11,17 @@ const PersonsList = ({persons,setPersons,setAlertMessage}) => {
       .then(response => {
         console.log('deleted user')
         setPersons(persons.filter(p=>p.id!==n.id))
-        setAlertMessage(`User ${n.name} has been deleted`)
+        setAlertMessage({message:`User ${n.name} has been deleted`,type:'alert'})
         setTimeout(() => {
-          setAlertMessage(null)
-        }, 3000)
+          setAlertMessage({message:null, type:null})
+        }, 5000)
       })
       .catch(error => {
         console.log(`Errore ${error}`)
+        setAlertMessage({message:`User ${n.name} has already been deleted`,type:'error'})
+        setTimeout(() => {
+          setAlertMessage({message:null, type:null})
+        }, 5000)
       })
       
     }

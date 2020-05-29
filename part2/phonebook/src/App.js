@@ -6,7 +6,9 @@ import PersonService from './services/persons'
 
 const App = () => {
   const [ persons, setPersons ] = useState([])
-  const [alertMessage, setAlertMessage] = useState(null)
+  const [alertMessage, setAlertMessage] = useState({
+    message: null, type:null
+  })
   //In the filter component i just update the personFilter values, but the actual filtering (change data to load)
   //its done here inside the App.js, since  I need to to use the data after filtering in other components. I couldnt update more components at once.
   const [ personFilter, setPersonFilter ] = useState({
@@ -36,16 +38,23 @@ const App = () => {
   
 
   //Notification to display
-  const Notification = ({ message }) => {
+  const Notification = ({ message,type }) => {
     if (message === null) {
       return null
     }
-    
-    return (
-      <div className="alert">
-        {message}
-      </div>
-    )
+    if(type ==='alert'){
+      return (
+        <div className="alert">
+          {message}
+        </div>
+      )
+    }else if(type==='error'){
+      return (
+        <div className="error">
+          {message}
+        </div>
+      )
+    }
   }
  
     
@@ -53,7 +62,7 @@ const App = () => {
   //page
   return (
     <div>
-      <Notification message={alertMessage}/>
+      <Notification message={alertMessage.message} type={alertMessage.type}/>
       <h2>Phonebook</h2>
       <PersonsFilter persons={persons} setPersonFilter={setPersonFilter}/>
       <h2>Add Person</h2>
