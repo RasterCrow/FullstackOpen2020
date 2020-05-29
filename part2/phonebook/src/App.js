@@ -2,18 +2,20 @@ import React, { useState, useEffect } from 'react'
 import PersonAdd from './components/PersonAdd'
 import PersonsList from './components/PersonsList'
 import PersonsFilter from './components/PersonsFilter'
-import axios from 'axios'
+import PersonService from './services/persons'
 
 const App = () => {
   const [ persons, setPersons ] = useState([])
+  
+  //hook effect, loads everytime there is a rebuild
   const hook = () =>{
-    
-      console.log('effect');
-      axios
-        .get('http://localhost:3001/persons')
-        .then(response =>{
-          console.log('got response');
-          setPersons(response.data)
+  
+      PersonService
+        .getPersonsList()
+        .then(list =>{
+          console.log(list)
+          console.log('Loaded persons List');
+          setPersons(persons.concat(list))
   
         })
   

@@ -1,5 +1,5 @@
 import React, {useState} from 'react'
-import axios from 'axios'
+import PersonService from '../services/persons'
 
 const PersonAdd = ({persons, setPersons}) => {
     const [ newName, setNewName ] = useState('')
@@ -22,12 +22,9 @@ const PersonAdd = ({persons, setPersons}) => {
             phone: newPhone
           }
           //add person to db
-          axios
-          .post('http://localhost:3001/persons', newPerson)
-          .then(response =>{
-            console.log('added person');
-            //updates list of persons with newest person
-            setPersons(persons.concat(response.data))
+          PersonService.addPerson(newPerson)
+          .then(returnedPerson =>{
+            setPersons(persons.concat(returnedPerson))
           })
           setNewName('')
           setNewPhone('')
@@ -35,11 +32,10 @@ const PersonAdd = ({persons, setPersons}) => {
       }
     }
     const handleNameChange = (event) => {
-      console.log(event.target.value)
+
       setNewName(event.target.value)
     }
     const handlePhoneChange = (event) => {
-      console.log(event.target.value)
       setNewPhone(event.target.value)
     }
     return(
