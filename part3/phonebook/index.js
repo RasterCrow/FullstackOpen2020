@@ -43,15 +43,20 @@ app.get("/api/persons",(req,res)=>{
 
 app.post("/api/persons",(req,res)=>{
     let data = req.body
-    console.log(data)
-    let person = {
+    let newPerson = {
         "name": data.name,
         "number": data.number,
         "id": Math.random()
     }
-    persons_list = persons_list.concat(person)
-    console.log("Persons added")
-    res.json(persons_list)
+    if (newPerson.name =="" || newPerson.number =="" ){
+        res.status(400).json({ error: 'name and number are required' })
+    }else if(persons_list.find(person => person.name === newPerson.name)!= undefined){
+        res.status(400).json({ error: 'there is already a person with this name' })
+    }else{
+        persons_list = persons_list.concat(newPerson)
+        console.log("Persons added")
+        res.json({ error: 'Person added succesfully' })
+    }
 })
 
 app.get("/api/persons/:id",(req,res)=>{
