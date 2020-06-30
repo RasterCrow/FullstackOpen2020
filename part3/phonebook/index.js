@@ -1,7 +1,9 @@
 const express = require('express')
-const app = express()
+const morgan = require('morgan')
 
+const app = express()
 app.use(express.json())
+app.use(morgan('tiny'))
 
 let persons_list = [
     {
@@ -37,7 +39,6 @@ app.get("/",(req,res) =>{
 })
 
 app.get("/api/persons",(req,res)=>{
-    console.log("Persons request")
     res.json(persons_list)
 })
 
